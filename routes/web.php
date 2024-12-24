@@ -17,11 +17,11 @@ Route::get('/bien/{slug}-{property}', [App\Http\Controllers\PropertyController::
     'slug' => $slugReg,
 ]);
 
-Route::get('/biens/{property}/contact', [PropertyController::class, 'contact'])->name('property.contact')->where([
+Route::post('/biens/{property}/contact', [App\Http\Controllers\PropertyController::class, 'contact'])->name('property.contact')->where([
     'property' => $idReg
 ]);
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.'], function () {
     Route::resource('property', PropertyController::class)->except(['show']);
     Route::resource('option', OptionController::class)->except(['show']);
 });

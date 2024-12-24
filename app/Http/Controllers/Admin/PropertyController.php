@@ -83,9 +83,4 @@ class PropertyController extends Controller
     {
         return to_route('admin.property.index')->with('success', 'Le bien a bien été supprimé !');
     }
-
-    public function contact(Property $property, PropertyContactRequest $request)
-    {
-        return view('admin.property.contact');
-    }
 }
