@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PropertyFormRequest;
 use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyFormRequest;
+use App\Http\Requests\PropertyContactRequest;
 
 class PropertyController extends Controller
 {
@@ -81,5 +82,10 @@ class PropertyController extends Controller
     public function destroy(Property $property)
     {
         return to_route('admin.property.index')->with('success', 'Le bien a bien été supprimé !');
+    }
+
+    public function contact(Property $property, PropertyContactRequest $request)
+    {
+        return view('admin.property.contact');
     }
 }
