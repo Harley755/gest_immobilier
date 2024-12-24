@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyFormRequest;
+use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class PropertyController extends Controller
     public function index()
     {
         $properties = Property::orderBy('created_at', 'DESC')->paginate(1);
+
 
         return view('admin.property.index', compact('properties'));
     }
@@ -34,7 +36,10 @@ class PropertyController extends Controller
             'postal_code' => 34000,
             'is_sell' => false,
         ]);
-        return view('admin.property.form', compact('property'));
+
+        $options = Option::pluck('name', 'id');
+
+        return view('admin.property.form', compact('property', 'options'));
     }
 
     /**
@@ -44,6 +49,7 @@ class PropertyController extends Controller
     {
         // dd($request->all());
         $createProperty = Property::create($request->validated());
+        $createProperty->options()->sync($request->validated('options'));
         return to_route('admin.property.index')->with('success', 'Le bien a bien été créé !');
     }
 
@@ -54,8 +60,9 @@ class PropertyController extends Controller
     {
 
         $property = Property::findOrFail($property->id);
+        $options = Option::pluck('name', 'id');
 
-        return view('admin.property.form', compact('property'));
+        return view('admin.property.form', compact('property', 'options'));
     }
 
     /**
@@ -64,6 +71,7 @@ class PropertyController extends Controller
     public function update(PropertyFormRequest $request, Property $property)
     {
         $property->update($request->validated());
+        $property->options()->sync($request->validated('options'));
         return to_route('admin.property.index')->with('success', 'Le bien a bien été mis à jour !');
     }
 

@@ -34,6 +34,10 @@
             @include('shared.input', ['class' => 'col', 'label' => 'Etage', 'name' => 'postal_code', 'value' => $property])
         </div>
         
+        
+        @include('shared.select', ['label' => 'Options', 'options' => $options, 'name' => 'options', 'value' => $property->options()->pluck('id'), 'multiple' => true])
+
+
         @include('shared.checkbox', ['label' => 'Vendu ?', 'name' => 'is_sell', 'value' => $property])
 
         <button class="btn btn-primary mt-4">
