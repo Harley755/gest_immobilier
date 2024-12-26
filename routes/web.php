@@ -22,9 +22,7 @@ Route::post('/biens/{property}/contact', [App\Http\Controllers\PropertyControlle
     'property' => $idReg
 ]);
 
-Route::get('/login', [AuthController::class, 'login'])
-    ->middleware('guest')
-    ->name('login');
+Route::get('/login', [AuthController::class, 'login'])->middleware('guest')->name('login');
 
 Route::post('/login', [AuthController::class, 'doLogin']);
 
@@ -32,7 +30,7 @@ Route::delete('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'as' => 'admin.'], function () {
     Route::resource('property', PropertyController::class)->except(['show']);
     Route::resource('option', OptionController::class)->except(['show']);
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,6 +25,10 @@ class Property extends Model
         'is_sell',
     ];
 
+    protected $casts = [
+        'created_at' => 'string',
+    ];
+
     public function options(): BelongsToMany
     {
         return $this->belongsToMany(Option::class);
@@ -32,5 +37,11 @@ class Property extends Model
     public function getSlug(): string
     {
         return Str::slug($this->title);
+    }
+
+
+    public function scopeAvailable(Builder $builder)
+    {
+        return $builder->where('is_sell', false);
     }
 }
