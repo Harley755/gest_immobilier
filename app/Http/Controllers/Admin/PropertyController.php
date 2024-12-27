@@ -6,11 +6,17 @@ use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\PropertyFormRequest;
 use App\Http\Requests\PropertyContactRequest;
 
 class PropertyController extends Controller
 {
+    public function __construc()
+    {
+        Gate::authorizeResource(Property::class, 'property');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -59,7 +65,7 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-
+        Gate::authorize('delete', $property);
         $property = Property::findOrFail($property->id);
         $options = Option::pluck('name', 'id');
 

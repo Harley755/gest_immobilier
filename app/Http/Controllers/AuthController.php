@@ -14,7 +14,7 @@ class AuthController extends Controller
         // User::create(
         //     [
         //         'name' => 'john',
-        //         'email' => 'johndoe@gmail.com',
+        //         'email' => 'johndoe2@gmail.com',
         //         'password' => 'azerty'
         //     ]
         // );
@@ -24,7 +24,6 @@ class AuthController extends Controller
     public function doLogin(LoginRequest $request)
     {
         $credential = $request->validated();
-
         if (Auth::attempt($credential)) {
             $request->session()->regenerate();
 
