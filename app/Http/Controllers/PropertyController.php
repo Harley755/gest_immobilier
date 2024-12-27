@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ContactRequestEvent;
 use App\Http\Requests\PropertyContactRequest;
 use App\Http\Requests\SearchPropertyRequest;
 use App\Mail\PropertyContactMail;
@@ -46,7 +47,7 @@ class PropertyController extends Controller
 
     public function contact(Property $property, PropertyContactRequest $request)
     {
-        Mail::send(new PropertyContactMail($property, $request->validated()));
+        event(new ContactRequestEvent($property, $request->validated()));
 
         return back()->with('success', 'Votre demande de contact à bien été envoyé !');
     }

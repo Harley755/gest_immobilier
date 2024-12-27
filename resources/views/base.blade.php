@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                <a @class(['nav-link', 'active' => str_contains($route, 'property.')]) aria-current="page" href="{{ route('property.index') }}">Biens</a>
+                    <a @class(['nav-link', 'active' => str_contains($route, 'property.')]) aria-current="page" href="{{ route('property.index') }}">Biens</a>
                 </li>
             </ul>
         </div>
@@ -32,5 +32,6 @@
 </nav>
 
 @yield('content')
+
 </body>
 </html>
